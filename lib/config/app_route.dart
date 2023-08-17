@@ -14,14 +14,11 @@ class AppRoutes {
 
 
   static Map<String, WidgetBuilder> routes = {
-    home: (context) => HomeScreen(),
-    addTip: (context) => ToolTipForm(),
-    editTip:(context) => ToolTipEdit(),
-    splash:(context) => SplashScreen(),
-    dbController:(context) => DbContoller(),
-    tipModel :(context) =>  TipModel(),
-
-
-    // Define more routes as needed
+    home: (context) => const HomeScreen(),
+    addTip: (context) => const ToolTipForm(),
+    editTip:(context) => const ToolTipEdit(),
+    splash:(context) => const SplashScreen(),
+    dbController:(context) => const DbContoller(),
+    tipModel :(context) =>  const TipModel(),
   };
 }
