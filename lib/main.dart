@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:trektip/screen/splash_screen.dart';
+import 'package:trektip/config/app_route.dart';
+import 'package:trektip/config/app_theme.dart';
 
 void main() {
   runApp(const MyApp());
@@ -10,9 +11,13 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
+    WidgetsFlutterBinding.ensureInitialized();
+
+    return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: SplashScreen(),
+      theme: AppTheme(),
+      initialRoute: AppRoutes.splash,
+      routes: AppRoutes.routes,
     );
   }
 }
