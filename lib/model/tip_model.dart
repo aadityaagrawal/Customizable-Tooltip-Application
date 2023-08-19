@@ -1,3 +1,6 @@
+import 'package:trektip/controller/db_controller.dart';
+import 'package:trektip/controller/form_controller.dart';
+
 class TipModel {
   final int? id;
   final String toolTipText;
@@ -57,4 +60,9 @@ class TipModel {
   String toString() {
     return 'TooltipSettings{id: $id, toolTipText: $toolTipText, textSize: $textSize, textPadding: $textPadding, textColor: $textColor, backgroundColor: $backgroundColor, cornerRadius: $cornerRadius, tooltipWidth: $tooltipWidth, arrowWidth: $arrowWidth, arrowHeight: $arrowHeight}';
   }
+
+
+
+
+
 }

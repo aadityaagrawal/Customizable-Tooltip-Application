@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:trektip/config/app_data.dart';
 import 'package:trektip/controller/db_controller.dart';
 import 'package:trektip/model/tip_model.dart';
-import 'package:trektip/widget/button_widget.dart';
+import 'package:trektip/widget/home_screen_button_widget.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -36,7 +36,7 @@ class _HomeScreenState extends State<HomeScreen> {
           leading: IconButton(
             icon: const Icon(Icons.settings),
             onPressed: () {
-              Navigator.pushNamed(context, "/addTip");
+              Navigator.pushNamed(context, "/editTip");
             },
           ),
         ),

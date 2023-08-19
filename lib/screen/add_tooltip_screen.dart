@@ -1,44 +1,62 @@
 import 'package:flutter/material.dart';
 import 'package:trektip/controller/db_controller.dart';
+import 'package:trektip/controller/form_controller.dart';
 import 'package:trektip/model/tip_model.dart';
-
+import 'package:trektip/widget/action_button_widget.dart';
 import '../widget/text_field_widget.dart';
 
 class ToolTipForm extends StatefulWidget {
-  const ToolTipForm({super.key});
+  final bool isUpdateTip;
+  const ToolTipForm({this.isUpdateTip = false, super.key});
 
   @override
   State<ToolTipForm> createState() => _ToolTipFormState();
 }
 
 class _ToolTipFormState extends State<ToolTipForm> {
-  // void insertData() {
-  //   final TipModel sampleTip = TipModel(
-  //     toolTipText: "Sample Tip Text",
-  //     textSize: 16,
-  //     textPadding: 10,
-  //     textColor: "#000000",
-  //     backgroundColor: "#FFFFFF",
-  //     cornerRadius: 8,
-  //     tooltipWidth: 200,
-  //     arrowWidth: 10,
-  //     arrowHeight: 20,
-  //   );
-
-  //   DbController().insertData(sampleTip);
-  // }
-
   final _formKey = GlobalKey<FormState>();
   int n = 5;
   List<String> dropdownOptions =
       List.generate(5, (index) => 'Button ${index + 1}');
   String? selectedOption;
+  late ToolTipFormState _formState;
+
+  dynamic dropdownValidator(dynamic value) {
+    if (value == null || value.isEmpty) {
+      return 'Please select a target element';
+    }
+    return null;
+  }
+
+  TipModel insertData(ToolTipFormState formState) {
+    // final TipModel tipData =
+
+    return TipModel(
+      toolTipText: formState.tipTextController.text,
+      textSize: int.parse(formState.sizeController.text),
+      textPadding: int.parse(formState.paddingController.text),
+      textColor: formState.textColorController.text,
+      backgroundColor: formState.backgroundColorController.text,
+      cornerRadius: int.parse(formState.tipRadiusController.text),
+      tooltipWidth: int.parse(formState.tipWidthController.text),
+      arrowWidth: int.parse(formState.arrowWidthController.text),
+      arrowHeight: int.parse(formState.arrowHeightController.text),
+    );
+    // DbController().insertData(tipData);
+  }
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
+    _formState = ToolTipFormState();
     // insertData();
+  }
+
+  @override
+  void dispose() {
+    _formState.dispose();
+    super.dispose();
   }
 
   @override
@@ -83,9 +101,12 @@ class _ToolTipFormState extends State<ToolTipForm> {
                             selectedOption = newValue;
                           });
                         },
-                        decoration: InputDecoration(
+                        decoration: const InputDecoration(
                           border: InputBorder.none,
                         ),
+                        validator: (value) {
+                          return dropdownValidator(value);
+                        },
                       ),
                     ),
                     const SizedBox(
@@ -95,34 +116,26 @@ class _ToolTipFormState extends State<ToolTipForm> {
                     const SizedBox(
                       height: 10,
                     ),
-                    Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 10),
-                      decoration: BoxDecoration(
-                          border: Border.all(color: Colors.grey),
-                          borderRadius: BorderRadius.circular(5.0)),
-                      child: TextFormField(
-                        // controller: textField2Controller,
-                        decoration: const InputDecoration(
-                          border: InputBorder.none,
-                          hintText: 'Input',
-                        ),
-                      ),
-                    ),
+                    CustomTextFromField(
+                        textController: _formState.tipTextController,
+                        hintText: "Input")
                   ],
                 ),
                 const SizedBox(
                   height: 10,
                 ),
                 Row(children: [
-                  const Expanded(
+                  Expanded(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text('Text Size'),
-                        SizedBox(
+                        const Text('Text Size'),
+                        const SizedBox(
                           height: 10,
                         ),
-                        CustomTextFromField(),
+                        CustomTextFromField(
+                            textController: _formState.sizeController,
+                            hintText: "10")
                       ],
                     ),
                   ),
@@ -137,23 +150,9 @@ class _ToolTipFormState extends State<ToolTipForm> {
                         const SizedBox(
                           height: 10,
                         ),
-                        Container(
-                          padding: const EdgeInsets.symmetric(horizontal: 10),
-                          decoration: BoxDecoration(
-                              border: Border.all(color: Colors.grey),
-                              borderRadius: BorderRadius.circular(5.0)),
-                          child: TextFormField(
-                            keyboardType: const TextInputType.numberWithOptions(
-                              signed: false,
-                              decimal: false,
-                            ),
-                            // controller: textField2Controller,
-                            decoration: const InputDecoration(
-                              border: InputBorder.none,
-                              hintText: '10 ',
-                            ),
-                          ),
-                        ),
+                        CustomTextFromField(
+                            textController: _formState.paddingController,
+                            hintText: "10")
                       ],
                     ),
                   ),
@@ -168,19 +167,9 @@ class _ToolTipFormState extends State<ToolTipForm> {
                     const SizedBox(
                       height: 10,
                     ),
-                    Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 10),
-                      decoration: BoxDecoration(
-                          border: Border.all(color: Colors.grey),
-                          borderRadius: BorderRadius.circular(5.0)),
-                      child: TextFormField(
-                        // controller: textField2Controller,
-                        decoration: const InputDecoration(
-                          border: InputBorder.none,
-                          hintText: 'Input',
-                        ),
-                      ),
-                    ),
+                    CustomTextFromField(
+                        textController: _formState.textColorController,
+                        hintText: "Input")
                   ],
                 ),
                 const SizedBox(
@@ -193,19 +182,9 @@ class _ToolTipFormState extends State<ToolTipForm> {
                     const SizedBox(
                       height: 10,
                     ),
-                    Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 10),
-                      decoration: BoxDecoration(
-                          border: Border.all(color: Colors.grey),
-                          borderRadius: BorderRadius.circular(5.0)),
-                      child: TextFormField(
-                        // controller: textField2Controller,
-                        decoration: const InputDecoration(
-                          border: InputBorder.none,
-                          hintText: 'Input',
-                        ),
-                      ),
-                    ),
+                    CustomTextFromField(
+                        textController: _formState.backgroundColorController,
+                        hintText: "Input")
                   ],
                 ),
                 const SizedBox(
@@ -220,23 +199,9 @@ class _ToolTipFormState extends State<ToolTipForm> {
                         const SizedBox(
                           height: 10,
                         ),
-                        Container(
-                          padding: const EdgeInsets.symmetric(horizontal: 10),
-                          decoration: BoxDecoration(
-                              border: Border.all(color: Colors.grey),
-                              borderRadius: BorderRadius.circular(5.0)),
-                          child: TextFormField(
-                            keyboardType: const TextInputType.numberWithOptions(
-                              signed: false,
-                              decimal: false,
-                            ),
-                            // controller: textField2Controller,
-                            decoration: const InputDecoration(
-                              border: InputBorder.none,
-                              hintText: '10 ',
-                            ),
-                          ),
-                        ),
+                        CustomTextFromField(
+                            textController: _formState.tipRadiusController,
+                            hintText: "10")
                       ],
                     ),
                   ),
@@ -251,23 +216,9 @@ class _ToolTipFormState extends State<ToolTipForm> {
                         const SizedBox(
                           height: 10,
                         ),
-                        Container(
-                          padding: const EdgeInsets.symmetric(horizontal: 10),
-                          decoration: BoxDecoration(
-                              border: Border.all(color: Colors.grey),
-                              borderRadius: BorderRadius.circular(5.0)),
-                          child: TextFormField(
-                            keyboardType: const TextInputType.numberWithOptions(
-                              signed: false,
-                              decimal: false,
-                            ),
-                            // controller: textField2Controller,
-                            decoration: const InputDecoration(
-                              border: InputBorder.none,
-                              hintText: '10 ',
-                            ),
-                          ),
-                        ),
+                        CustomTextFromField(
+                            textController: _formState.tipWidthController,
+                            hintText: "10")
                       ],
                     ),
                   ),
@@ -284,23 +235,9 @@ class _ToolTipFormState extends State<ToolTipForm> {
                         const SizedBox(
                           height: 10,
                         ),
-                        Container(
-                          padding: const EdgeInsets.symmetric(horizontal: 10),
-                          decoration: BoxDecoration(
-                              border: Border.all(color: Colors.grey),
-                              borderRadius: BorderRadius.circular(5.0)),
-                          child: TextFormField(
-                            keyboardType: const TextInputType.numberWithOptions(
-                              signed: false,
-                              decimal: false,
-                            ),
-                            // controller: textField2Controller,
-                            decoration: const InputDecoration(
-                              border: InputBorder.none,
-                              hintText: '10 ',
-                            ),
-                          ),
-                        ),
+                        CustomTextFromField(
+                            textController: _formState.arrowWidthController,
+                            hintText: "10")
                       ],
                     ),
                   ),
@@ -315,23 +252,9 @@ class _ToolTipFormState extends State<ToolTipForm> {
                         const SizedBox(
                           height: 10,
                         ),
-                        Container(
-                          padding: const EdgeInsets.symmetric(horizontal: 10),
-                          decoration: BoxDecoration(
-                              border: Border.all(color: Colors.grey),
-                              borderRadius: BorderRadius.circular(5.0)),
-                          child: TextFormField(
-                            keyboardType: const TextInputType.numberWithOptions(
-                              signed: false,
-                              decimal: false,
-                            ),
-                            // controller: textField2Controller,
-                            decoration: const InputDecoration(
-                              border: InputBorder.none,
-                              hintText: '10 ',
-                            ),
-                          ),
-                        ),
+                        CustomTextFromField(
+                            textController: _formState.arrowHeightController,
+                            hintText: "10")
                       ],
                     ),
                   ),
@@ -339,14 +262,42 @@ class _ToolTipFormState extends State<ToolTipForm> {
                 const SizedBox(
                   height: 30,
                 ),
-                Center(
-                  child: ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                          padding: const EdgeInsets.all(15),
-                          backgroundColor: Theme.of(context).primaryColor),
-                      onPressed: () {},
-                      child: const Text("Render Tooltip")),
-                )
+                widget.isUpdateTip
+                    ? Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          ActionButtons(
+                            onTap: () {
+                              print("Delete function");
+                              DbController().deleteData(insertData(_formState));
+                            },
+                            buttonColor: Colors.red,
+                            buttonText: "Delete",
+                          ),
+                          ActionButtons(
+                            onTap: () {
+                              if (_formKey.currentState!.validate()) {
+                                print("The form is ready to update");
+                                DbController().updateTooltipSettings(
+                                    insertData(_formState));
+                              }
+                            },
+                            buttonColor: Theme.of(context).primaryColor,
+                            buttonText: "Update",
+                          ),
+                        ],
+                      )
+                    : Center(
+                        child: ActionButtons(
+                            onTap: () {
+                              if (_formKey.currentState!.validate()) {
+                                DbController()
+                                    .insertData(insertData(_formState));
+                                print("The form is ready to submit");
+                              }
+                            },
+                            buttonColor: Theme.of(context).primaryColor,
+                            buttonText: "Render Tooltip"))
               ],
             ),
           ),

@@ -6,12 +6,15 @@ class AppRoutes {
   static const String addTip = '/addTip';
   static const String splash = '/splash';
   static const String editTip = '/editTip';
-
+  static const String updateTip = '/updateTip';
 
   static Map<String, WidgetBuilder> routes = {
     home: (context) => const HomeScreen(),
-    addTip: (context) => const ToolTipForm(),
-    editTip:(context) => const ToolTipEdit(),
-    splash:(context) => const SplashScreen(),
+    addTip: (context) => ToolTipForm(),
+    editTip: (context) => const ToolTipEdit(),
+    splash: (context) => const SplashScreen(),
+    updateTip: (context) => ToolTipForm(
+          isUpdateTip: true,
+        )
   };
 }
