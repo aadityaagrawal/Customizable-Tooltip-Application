@@ -12,9 +12,47 @@ class ToolTipEdit extends StatefulWidget {
 }
 
 class _ToolTipEditState extends State<ToolTipEdit> {
-  List<TipModel> savedTips = [];
   int lengthofDataAdded = 0;
+  List<TipModel> savedTips = [];
   List<Widget> addedTipsList = [];
+
+  List<Widget> addingTipTile() {
+    return List.generate(lengthofDataAdded, (index) {
+      return Container(
+        margin: const EdgeInsets.only(bottom: 10),
+        decoration: BoxDecoration(
+            border: Border.all(color: Colors.black.withOpacity(0.5)),
+            borderRadius: BorderRadius.circular(10)),
+        child: ListTile(
+          titleAlignment: ListTileTitleAlignment.center,
+          trailing: const Icon(
+            Icons.edit,
+            color: Colors.black,
+          ),
+          onTap: () async {
+            final result = await Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => ToolTipForm(
+                  isUpdateTip: true,
+                  tipModel: savedTips[index],
+                ),
+              ),
+            );
+
+            if (result == true) {
+              setState(() {});
+            }
+
+            // Navigator.pushNamed(context, '/updateTip',
+            //     arguments: savedTips[index]);
+          },
+          title: Text("Tooltip of ${(savedTips[index].targetElement)}"),
+          contentPadding: const EdgeInsets.all(10),
+        ),
+      );
+    });
+  }
 
   @override
   void initState() {
@@ -26,41 +64,7 @@ class _ToolTipEditState extends State<ToolTipEdit> {
       });
       lengthofDataAdded = savedTips.length;
 
-      addedTipsList = List.generate(lengthofDataAdded, (index) {
-        return Container(
-          margin: const EdgeInsets.only(bottom: 10),
-          decoration: BoxDecoration(
-              border: Border.all(color: Colors.black.withOpacity(0.5)),
-              borderRadius: BorderRadius.circular(10)),
-          child: ListTile(
-            titleAlignment: ListTileTitleAlignment.center,
-            trailing: const Icon(
-              Icons.edit,
-              color: Colors.black,
-            ),
-            onTap: () async {
-              final result = await Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => ToolTipForm(
-                    isUpdateTip: true,
-                    tipModel: savedTips[index],
-                  ),
-                ),
-              );
-
-              if (result == true) {
-                setState(() {});
-              }
-
-              // Navigator.pushNamed(context, '/updateTip',
-              //     arguments: savedTips[index]);
-            },
-            title: Text("Tooltip of ${(savedTips[index].targetElement)}"),
-            contentPadding: const EdgeInsets.all(10),
-          ),
-        );
-      });
+      addedTipsList = addingTipTile();
     });
   }
 

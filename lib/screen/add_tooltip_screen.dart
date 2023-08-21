@@ -67,6 +67,9 @@ class _ToolTipFormState extends State<ToolTipForm> {
   Future<bool> colorPickerDialog(
       TextEditingController controller, int index) async {
     return ColorPicker(
+        pickersEnabled: const {
+          ColorPickerType.accent: false,
+        },
         heading: const Text("Select color"),
         subheading: const Text("Select color shades"),
         width: 40,
