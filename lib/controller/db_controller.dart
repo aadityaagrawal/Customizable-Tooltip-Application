@@ -62,6 +62,14 @@ class DbController {
     );
   }
 
+  Future<TipModel> getSingleData(int id) async {
+    final db = await getDatabase();
+    final List<Map<String, dynamic>> maps =
+        await db.query(appData.tableName, where: "id = ?", whereArgs: [id]);
+    print(maps);
+    return TipModel.fromMap(maps[0]);
+  }
+
   void deleteData(int id) async {
     final db = await getDatabase();
 
