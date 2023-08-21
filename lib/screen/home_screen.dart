@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:trektip/config/app_data.dart';
-import 'package:trektip/controller/db_controller.dart';
-import 'package:trektip/model/tip_model.dart';
 import 'package:trektip/widget/home_screen_button_widget.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -12,18 +10,7 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  void printQuery() async {
-    List<TipModel> data = await DbController().getData();
-    print(data.first.toString());
-  }
-
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    printQuery();
-  }
-
+  
   AppData appData = AppData();
 
   @override

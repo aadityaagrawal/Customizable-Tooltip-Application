@@ -1,19 +1,23 @@
 import 'package:flutter/material.dart';
+import 'package:trektip/config/app_data.dart';
 import 'package:trektip/controller/db_controller.dart';
 import 'package:trektip/controller/form_controller.dart';
 import 'package:trektip/model/tip_model.dart';
 import 'package:trektip/widget/action_button_widget.dart';
 import '../widget/text_field_widget.dart';
+import 'package:flex_color_picker/flex_color_picker.dart';
 
 class ToolTipForm extends StatefulWidget {
   final bool isUpdateTip;
-  const ToolTipForm({this.isUpdateTip = false, super.key});
+  final TipModel? tipModel;
+  const ToolTipForm({this.isUpdateTip = false, super.key, this.tipModel});
 
   @override
   State<ToolTipForm> createState() => _ToolTipFormState();
 }
 
 class _ToolTipFormState extends State<ToolTipForm> {
+  List<Color?> dialogPickerColor = [null, null];
   final _formKey = GlobalKey<FormState>();
   int n = 5;
   List<String> dropdownOptions =
@@ -29,9 +33,8 @@ class _ToolTipFormState extends State<ToolTipForm> {
   }
 
   TipModel insertData(ToolTipFormState formState) {
-    // final TipModel tipData =
-
     return TipModel(
+      targetElement: selectedOption!,
       toolTipText: formState.tipTextController.text,
       textSize: int.parse(formState.sizeController.text),
       textPadding: int.parse(formState.paddingController.text),
@@ -42,7 +45,44 @@ class _ToolTipFormState extends State<ToolTipForm> {
       arrowWidth: int.parse(formState.arrowWidthController.text),
       arrowHeight: int.parse(formState.arrowHeightController.text),
     );
-    // DbController().insertData(tipData);
+  }
+
+  void showData(TipModel? tipModel) {
+    if (tipModel != null) {
+      selectedOption = tipModel.targetElement;
+      _formState.tipTextController.text = tipModel.toolTipText;
+      _formState.sizeController.text = tipModel.textSize.toString();
+      _formState.paddingController.text = tipModel.textPadding.toString();
+      _formState.textColorController.text = tipModel.textColor;
+      _formState.backgroundColorController.text = tipModel.backgroundColor;
+      _formState.tipRadiusController.text = tipModel.cornerRadius.toString();
+      _formState.tipWidthController.text = tipModel.arrowWidth.toString();
+      _formState.arrowWidthController.text = tipModel.arrowWidth.toString();
+      _formState.arrowHeightController.text = tipModel.arrowHeight.toString();
+      dialogPickerColor[0] = Color(int.parse('0x${tipModel.textColor}'));
+      dialogPickerColor[1] = Color(int.parse('0x${tipModel.backgroundColor}'));
+    }
+  }
+
+  Future<bool> colorPickerDialog(
+      TextEditingController controller, int index) async {
+    return ColorPicker(
+        heading: const Text("Select color"),
+        subheading: const Text("Select color shades"),
+        width: 40,
+        height: 40,
+        spacing: 5,
+        runSpacing: 5,
+        color: dialogPickerColor[index] ?? Colors.transparent,
+        onColorChanged: (Color color) {
+          setState(() {
+            dialogPickerColor[index] = color;
+            controller.text = ColorTools.colorCode(dialogPickerColor[index]!);
+            if (AppData().printBool) {
+              print(controller.text);
+            }
+          });
+        }).showPickerDialog(context);
   }
 
   @override
@@ -50,7 +90,7 @@ class _ToolTipFormState extends State<ToolTipForm> {
     // TODO: implement initState
     super.initState();
     _formState = ToolTipFormState();
-    // insertData();
+    if (widget.tipModel != null) showData(widget.tipModel);
   }
 
   @override
@@ -167,9 +207,45 @@ class _ToolTipFormState extends State<ToolTipForm> {
                     const SizedBox(
                       height: 10,
                     ),
-                    CustomTextFromField(
-                        textController: _formState.textColorController,
-                        hintText: "Input")
+                    ListTile(
+                      minLeadingWidth: 0,
+                      shape: RoundedRectangleBorder(
+                        side: const BorderSide(width: 1, color: Colors.grey),
+                        borderRadius: BorderRadius.circular(5),
+                      ),
+                      onTap: () async {
+                        final Color beforeSelectedColor =
+                            dialogPickerColor[0] ?? Colors.transparent;
+
+                        if (!(await colorPickerDialog(
+                            _formState.textColorController, 0))) {
+                          setState(() {
+                            dialogPickerColor[0] = beforeSelectedColor;
+                          });
+                        }
+                      },
+                      title: dialogPickerColor[0] != null
+                          ? Text(
+                              ColorTools.nameThatColor(dialogPickerColor[0]!))
+                          : const Text("Choose color"),
+                      trailing: ColorIndicator(
+                        width: 30,
+                        height: 30,
+                        borderRadius: 4,
+                        color: dialogPickerColor[0] ?? Colors.transparent,
+                        // onSelectFocus: false,
+                        onSelect: () async {
+                          final Color beforeSelectedColor =
+                              dialogPickerColor[0] ?? Colors.transparent;
+                          if (!(await colorPickerDialog(
+                              _formState.textColorController, 0))) {
+                            setState(() {
+                              dialogPickerColor[0] = beforeSelectedColor;
+                            });
+                          }
+                        },
+                      ),
+                    ),
                   ],
                 ),
                 const SizedBox(
@@ -182,9 +258,44 @@ class _ToolTipFormState extends State<ToolTipForm> {
                     const SizedBox(
                       height: 10,
                     ),
-                    CustomTextFromField(
-                        textController: _formState.backgroundColorController,
-                        hintText: "Input")
+                    ListTile(
+                      minLeadingWidth: 0,
+                      shape: RoundedRectangleBorder(
+                        side: const BorderSide(width: 1, color: Colors.grey),
+                        borderRadius: BorderRadius.circular(5),
+                      ),
+                      onTap: () async {
+                        final Color beforeSelectedColor =
+                            dialogPickerColor[1] ?? Colors.transparent;
+
+                        if (!(await colorPickerDialog(
+                            _formState.backgroundColorController, 1))) {
+                          setState(() {
+                            dialogPickerColor[1] = beforeSelectedColor;
+                          });
+                        }
+                      },
+                      title: dialogPickerColor[1] != null
+                          ? Text(
+                              ColorTools.nameThatColor(dialogPickerColor[1]!))
+                          : const Text("Choose color"),
+                      trailing: ColorIndicator(
+                        width: 30,
+                        height: 30,
+                        borderRadius: 4,
+                        color: dialogPickerColor[1] ?? Colors.transparent,
+                        onSelect: () async {
+                          final Color beforeSelectedColor =
+                              dialogPickerColor[1] ?? Colors.transparent;
+                          if (!(await colorPickerDialog(
+                              _formState.backgroundColorController, 1))) {
+                            setState(() {
+                              dialogPickerColor[1] = beforeSelectedColor;
+                            });
+                          }
+                        },
+                      ),
+                    ),
                   ],
                 ),
                 const SizedBox(
@@ -268,8 +379,12 @@ class _ToolTipFormState extends State<ToolTipForm> {
                         children: [
                           ActionButtons(
                             onTap: () {
-                              print("Delete function");
-                              DbController().deleteData(insertData(_formState));
+                              DbController().deleteData(widget.tipModel!.id!);
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                  const SnackBar(
+                                      content: Text(
+                                          "Tooltip deleted successfully")));
+                              Navigator.of(context).pop(true);
                             },
                             buttonColor: Colors.red,
                             buttonText: "Delete",
@@ -277,9 +392,11 @@ class _ToolTipFormState extends State<ToolTipForm> {
                           ActionButtons(
                             onTap: () {
                               if (_formKey.currentState!.validate()) {
-                                print("The form is ready to update");
                                 DbController().updateTooltipSettings(
-                                    insertData(_formState));
+                                    insertData(_formState),
+                                    widget.tipModel!.id!);
+
+                                Navigator.of(context).pop(true);
                               }
                             },
                             buttonColor: Theme.of(context).primaryColor,
@@ -293,7 +410,11 @@ class _ToolTipFormState extends State<ToolTipForm> {
                               if (_formKey.currentState!.validate()) {
                                 DbController()
                                     .insertData(insertData(_formState));
-                                print("The form is ready to submit");
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                    const SnackBar(
+                                        content: Text(
+                                            "Tooltip added successfully")));
+                                Navigator.of(context).pop(true);
                               }
                             },
                             buttonColor: Theme.of(context).primaryColor,

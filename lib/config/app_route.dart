@@ -10,10 +10,10 @@ class AppRoutes {
 
   static Map<String, WidgetBuilder> routes = {
     home: (context) => const HomeScreen(),
-    addTip: (context) => ToolTipForm(),
+    addTip: (context) => const ToolTipForm(),
     editTip: (context) => const ToolTipEdit(),
     splash: (context) => const SplashScreen(),
-    updateTip: (context) => ToolTipForm(
+    updateTip: (context) => const ToolTipForm(
           isUpdateTip: true,
         )
   };

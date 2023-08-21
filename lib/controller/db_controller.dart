@@ -17,6 +17,7 @@ class DbController {
                           CREATE TABLE TOOLTIP
                           (
                             id INTEGER PRIMARY KEY AUTOINCREMENT,
+                            targetElement TEXT,
                             toolTipText TEXT,
                             textSize INTEGER,
                             textPadding INTEGER,
@@ -37,7 +38,8 @@ class DbController {
 
     Map<String, dynamic> data = tipData.toMap();
 
-    db.insert(appData.tableName, data, conflictAlgorithm: ConflictAlgorithm.replace);
+    db.insert(appData.tableName, data,
+        conflictAlgorithm: ConflictAlgorithm.replace);
   }
 
   Future<List<TipModel>> getData() async {
@@ -48,19 +50,21 @@ class DbController {
     });
   }
 
-  Future<void> updateTooltipSettings(TipModel data) async {
+  Future<void> updateTooltipSettings(TipModel data, int id) async {
     final db = await getDatabase();
+    Map<String, dynamic> updateData = data.toMap();
+    updateData["id"] = id;
     db.update(
       appData.tableName,
-      data.toMap(),
+      updateData,
       where: 'id = ?',
-      whereArgs: [data.id],
+      whereArgs: [id],
     );
   }
 
-  void deleteData(TipModel tipData) async {
+  void deleteData(int id) async {
     final db = await getDatabase();
 
-    db.delete(appData.tableName, where: "id = ?", whereArgs: [tipData.id]);
+    db.delete(appData.tableName, where: "id = ?", whereArgs: [id]);
   }
 }

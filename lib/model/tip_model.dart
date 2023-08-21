@@ -1,8 +1,6 @@
-import 'package:trektip/controller/db_controller.dart';
-import 'package:trektip/controller/form_controller.dart';
-
 class TipModel {
   final int? id;
+  final String targetElement;
   final String toolTipText;
   final int textSize;
   final int textPadding;
@@ -15,6 +13,7 @@ class TipModel {
 
   TipModel({
     this.id,
+    required this.targetElement,
     required this.toolTipText,
     required this.textSize,
     required this.textPadding,
@@ -29,6 +28,7 @@ class TipModel {
   Map<String, dynamic> toMap() {
     return {
       'id': id,
+      "targetElement": targetElement,
       'toolTipText': toolTipText,
       'textSize': textSize,
       'textPadding': textPadding,
@@ -53,16 +53,12 @@ class TipModel {
       tooltipWidth: map['tooltipWidth'],
       arrowWidth: map['arrowWidth'],
       arrowHeight: map['arrowHeight'],
+      targetElement: map['targetElement'],
     );
   }
 
   @override
   String toString() {
-    return 'TooltipSettings{id: $id, toolTipText: $toolTipText, textSize: $textSize, textPadding: $textPadding, textColor: $textColor, backgroundColor: $backgroundColor, cornerRadius: $cornerRadius, tooltipWidth: $tooltipWidth, arrowWidth: $arrowWidth, arrowHeight: $arrowHeight}';
+    return 'TooltipSettings{id: $id, targetElement: $targetElement ,toolTipText: $toolTipText, textSize: $textSize, textPadding: $textPadding, textColor: $textColor, backgroundColor: $backgroundColor, cornerRadius: $cornerRadius, tooltipWidth: $tooltipWidth, arrowWidth: $arrowWidth, arrowHeight: $arrowHeight}';
   }
-
-
-
-
-
 }
