@@ -30,7 +30,7 @@ class _ToolTipEditState extends State<ToolTipEdit> {
             color: Colors.black,
           ),
           onTap: () async {
-            final result = await Navigator.push(
+            Navigator.push(
               context,
               MaterialPageRoute(
                 builder: (context) => ToolTipForm(
@@ -38,11 +38,25 @@ class _ToolTipEditState extends State<ToolTipEdit> {
                   tipModel: savedTips[index],
                 ),
               ),
-            );
+            ).then((result) {
+              if (result == true) {
+                // Data was updated, refresh the screen
+                setState(() {
+                  // Add your logic to refresh the UI or data here
+                  DbController().getData().then((value) {
+                    setState(() {
+                      savedTips = value;
+                      savedTips.sort((a, b) =>
+                                  a.targetElement.compareTo(b.targetElement));
+                    });
+                    lengthofDataAdded = savedTips.length;
 
-            if (result == true) {
-              setState(() {});
-            }
+                    addedTipsList = addingTipTile();
+                  });
+                });
+              }
+            });
+            ;
 
             // Navigator.pushNamed(context, '/updateTip',
             //     arguments: savedTips[index]);
@@ -61,9 +75,9 @@ class _ToolTipEditState extends State<ToolTipEdit> {
     DbController().getData().then((value) {
       setState(() {
         savedTips = value;
+        savedTips.sort((a, b) => a.targetElement.compareTo(b.targetElement));
       });
       lengthofDataAdded = savedTips.length;
-
       addedTipsList = addingTipTile();
     });
   }
@@ -76,6 +90,12 @@ class _ToolTipEditState extends State<ToolTipEdit> {
         title: const Text("Tooltips details"),
         backgroundColor: Theme.of(context).primaryColor,
         elevation: 0,
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back),
+          onPressed: () {
+            Navigator.pop(context, true);
+          },
+        ),
       ),
       body: Container(
         margin: const EdgeInsets.all(20),
@@ -93,11 +113,24 @@ class _ToolTipEditState extends State<ToolTipEdit> {
               child: ListTile(
                 onTap: () async {
                   if (addedTipsList.length < AppData().numberOfBoxes) {
-                    final result =
-                        await Navigator.pushNamed(context, "/addTip");
-                    if (result == true) {
-                      setState(() {});
-                    }
+                    Navigator.pushNamed(context, "/addTip").then((result) {
+                      if (result == true) {
+                        // Data was updated, refresh the screen
+                        setState(() {
+                          // Add your logic to refresh the UI or data here
+                          DbController().getData().then((value) {
+                            setState(() {
+                              savedTips = value;
+                              savedTips.sort((a, b) =>
+                                  a.targetElement.compareTo(b.targetElement));
+                            });
+                            lengthofDataAdded = savedTips.length;
+
+                            addedTipsList = addingTipTile();
+                          });
+                        });
+                      }
+                    });
                   }
                 },
                 titleAlignment: ListTileTitleAlignment.center,

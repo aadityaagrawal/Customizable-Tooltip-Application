@@ -21,7 +21,7 @@ class _ToolTipFormState extends State<ToolTipForm> {
   final _formKey = GlobalKey<FormState>();
   int n = 5;
   List<String> dropdownOptions =
-      List.generate(5, (index) => 'Button ${index + 1}');
+      List.generate(AppData().numberOfBoxes, (index) => 'Button ${index + 1}');
   String? selectedOption;
   late ToolTipFormState _formState;
 
@@ -56,7 +56,7 @@ class _ToolTipFormState extends State<ToolTipForm> {
       _formState.textColorController.text = tipModel.textColor;
       _formState.backgroundColorController.text = tipModel.backgroundColor;
       _formState.tipRadiusController.text = tipModel.cornerRadius.toString();
-      _formState.tipWidthController.text = tipModel.arrowWidth.toString();
+      _formState.tipWidthController.text = tipModel.tooltipWidth.toString();
       _formState.arrowWidthController.text = tipModel.arrowWidth.toString();
       _formState.arrowHeightController.text = tipModel.arrowHeight.toString();
       dialogPickerColor[0] = Color(int.parse('0x${tipModel.textColor}'));
@@ -387,7 +387,7 @@ class _ToolTipFormState extends State<ToolTipForm> {
                                   const SnackBar(
                                       content: Text(
                                           "Tooltip deleted successfully")));
-                              Navigator.of(context).pop(true);
+                              Navigator.pop(context, true);
                             },
                             buttonColor: Colors.red,
                             buttonText: "Delete",
@@ -398,8 +398,11 @@ class _ToolTipFormState extends State<ToolTipForm> {
                                 DbController().updateTooltipSettings(
                                     insertData(_formState),
                                     widget.tipModel!.id!);
-
-                                Navigator.of(context).pop(true);
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                    const SnackBar(
+                                        content: Text(
+                                            "Tooltip updated successfully")));
+                                Navigator.pop(context, true);
                               }
                             },
                             buttonColor: Theme.of(context).primaryColor,
@@ -417,7 +420,8 @@ class _ToolTipFormState extends State<ToolTipForm> {
                                     const SnackBar(
                                         content: Text(
                                             "Tooltip added successfully")));
-                                Navigator.of(context).pop(true);
+                                setState(() {});
+                                Navigator.pop(context, true);
                               }
                             },
                             buttonColor: Theme.of(context).primaryColor,
