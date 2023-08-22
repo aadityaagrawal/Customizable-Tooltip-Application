@@ -13,7 +13,25 @@ class CustomTextFromField extends StatelessWidget {
 
   dynamic validatorFunction(dynamic value) {
     if (value == null || value.isEmpty) {
-      return 'This field cannot be empty';
+      if (hintText == "10") {
+        textController.text = '10';
+        return null;
+      } else {
+        return 'This field cannot be empty';
+      }
+    }
+
+    if (hintText == '10') {
+      try {
+        final parsedValue = double.parse(value);
+        if (parsedValue >= 0) {
+          return null;
+        } else {
+          return 'Enter number greater than 10';
+        }
+      } catch (e) {
+        return 'Remove special character';
+      }
     }
     return null;
   }
