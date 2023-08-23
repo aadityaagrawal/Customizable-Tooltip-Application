@@ -25,6 +25,7 @@ class TipModel {
     required this.arrowHeight,
   });
 
+  /// Converts the [TipModel] object to a map for database storage.
   Map<String, dynamic> toMap() {
     return {
       'id': id,
@@ -41,6 +42,7 @@ class TipModel {
     };
   }
 
+  /// Creates a [TipModel] object from a map retrieved from the database.
   factory TipModel.fromMap(Map<String, dynamic> map) {
     return TipModel(
       id: map['id'],

@@ -39,21 +39,27 @@ class CustomButtonForCustomToolTip extends StatelessWidget {
             child: ElevatedButton(
               style: ElevatedButton.styleFrom(
                 minimumSize: Size(MediaQuery.of(context).size.width * 0.3, 30),
-                padding: const EdgeInsets.all(20),
-                backgroundColor: Theme.of(context).primaryColor,
+                padding: const EdgeInsets.all(15),
+                backgroundColor: Colors.white,
               ),
               onPressed: () {},
-              child: Text("Button ${index + 1}"),
+              child: Text(
+                "Button ${index + 1}",
+                style: Theme.of(context).textTheme.displayMedium,
+              ),
             ),
           )
         : ElevatedButton(
             style: ElevatedButton.styleFrom(
               minimumSize: Size(MediaQuery.of(context).size.width * 0.3, 30),
-              padding: const EdgeInsets.all(20),
-              backgroundColor: Theme.of(context).primaryColor,
+              padding: const EdgeInsets.all(15),
+              backgroundColor: Colors.white,
             ),
             onPressed: () {},
-            child: Text("Button ${index + 1}"),
+            child: Text(
+              "Button ${index + 1}",
+              style: Theme.of(context).textTheme.displayMedium,
+            ),
           );
   }
 }

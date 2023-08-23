@@ -3,7 +3,6 @@ import 'package:trektip/config/app_data.dart';
 import 'package:trektip/controller/db_controller.dart';
 import 'package:trektip/model/tip_model.dart';
 import 'package:trektip/widget/custom_tool_tip_home_screen_button.dart';
-import 'package:trektip/widget/home_screen_button_widget.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -29,6 +28,8 @@ class _HomeScreenState extends State<HomeScreen> {
     currentIndex = 0;
   }
 
+  /// Code to show built tooltips
+
   // void addWidgetToCurrentList(List<TipModel> tipData) {
   //   for (int i = 0; i < AppData().numberOfBoxes; i++) {
   //     if (widgetLists.length <= currentIndex) {
@@ -43,6 +44,10 @@ class _HomeScreenState extends State<HomeScreen> {
   //   }
   // }
 
+  /// Code to show customised tooltip
+  ///
+  /// To show the tooltip longpress on the button
+  /// To exit the tooltip tap on the button
   void addWidgetToCurrentList(List<TipModel> tipData) {
     for (int i = 0; i < AppData().numberOfBoxes; i++) {
       if (widgetLists.length <= currentIndex) {
@@ -92,7 +97,8 @@ class _HomeScreenState extends State<HomeScreen> {
             return const CircularProgressIndicator();
           } else {
             return Container(
-              margin: const EdgeInsets.all(20.0),
+              color: Colors.black.withOpacity(0.25),
+              padding: const EdgeInsets.all(20.0),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: widgetLists.asMap().entries.map(

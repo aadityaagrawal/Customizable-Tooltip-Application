@@ -38,6 +38,7 @@ dependencies:
   loading_animation_widget:
   sqflite: ^2.3.0
   flex_color_picker: ^3.3.0
+  path :
   
   
 

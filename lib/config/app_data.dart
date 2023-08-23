@@ -1,5 +1,5 @@
 class AppData {
-  bool printBool = true;
+  bool printBool = false;
   int numberOfBoxes = 5;
   String dbName = "tooltipdatabase.db";
   String tableName = "TOOLTIP";

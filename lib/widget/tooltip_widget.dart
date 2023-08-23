@@ -13,20 +13,33 @@ class CustomTooltip extends StatefulWidget {
   final double verticalOffset;
   final double paddingTip;
 
-  const CustomTooltip({
-    super.key,
-    required this.message,
-    required this.child,
-    required this.fontSize,
-    required this.textColor ,
-    required this.backgroundColor,
-    required this.arrowHeight,
-    required this.arrowWidth,
-    required this.width ,
-    required this.cornerRadius ,
-    required this.verticalOffset,
-    required this.paddingTip 
-  });
+  /// Creates a [CustomTooltip] widget.
+  ///
+  /// [message] is the text displayed in the tooltip.
+  /// [child] is the widget that will trigger the tooltip on long press.
+  /// [fontSize] is the font size of the tooltip text.
+  /// [textColor] is the color of the tooltip text.
+  /// [backgroundColor] is the background color of the tooltip.
+  /// [arrowHeight] is the height of the tooltip arrow.
+  /// [arrowWidth] is the width of the tooltip arrow.
+  /// [width] is the width of the tooltip.
+  /// [cornerRadius] is the corner radius of the tooltip.
+  /// [verticalOffset] is the vertical offset of the tooltip.
+  /// [paddingTip] is the padding around the tooltip text.
+
+  const CustomTooltip(
+      {super.key,
+      required this.message,
+      required this.child,
+      required this.fontSize,
+      required this.textColor,
+      required this.backgroundColor,
+      required this.arrowHeight,
+      required this.arrowWidth,
+      required this.width,
+      required this.cornerRadius,
+      required this.verticalOffset,
+      required this.paddingTip});
 
   @override
   _CustomTooltipState createState() => _CustomTooltipState();
@@ -41,6 +54,7 @@ class _CustomTooltipState extends State<CustomTooltip> {
     super.dispose();
   }
 
+  /// Displays the tooltip overlay on long press.
   void presentTip(BuildContext context, Offset pressLocation) {
     final RenderBox renderBox = context.findRenderObject() as RenderBox;
     final childSize = renderBox.size;
@@ -51,6 +65,7 @@ class _CustomTooltipState extends State<CustomTooltip> {
     double tooltipHeight =
         widget.arrowHeight + 2 * widget.paddingTip + widget.fontSize;
 
+    /// bool to check wether to show tip above or below the child widget
     bool isBelowButton =
         childCenter.dy + widget.verticalOffset + tooltipHeight <=
             MediaQuery.of(context).size.height;
@@ -66,7 +81,6 @@ class _CustomTooltipState extends State<CustomTooltip> {
         tooltipTop = childCenter.dy - widget.verticalOffset - tooltipHeight;
       }
 
-
       isArrowPointingUp = false;
     }
 
@@ -77,7 +91,8 @@ class _CustomTooltipState extends State<CustomTooltip> {
     if (initialTooltipLeft < 0) {
       tooltipLeft = 0; // Set tooltip to the left edge of the screen
     }
-    // Check if the tooltip extends beyond the screen width on the right side
+
+    /// Check if the tooltip extends beyond the screen width on the right side
     else if (initialTooltipLeft + widget.width >
         MediaQuery.of(context).size.width) {
       tooltipLeft = MediaQuery.of(context).size.width -
@@ -115,7 +130,7 @@ class _CustomTooltipState extends State<CustomTooltip> {
                       constraints: const BoxConstraints(
                           maxHeight: 100), // Set maximum height
                       child: SingleChildScrollView(
-                        // Use SingleChildScrollView for scrolling
+                        /// SingleChildScrollView for scrolling the content which goes above height
                         child: Text(
                           widget.message,
                           style: TextStyle(
@@ -143,6 +158,7 @@ class _CustomTooltipState extends State<CustomTooltip> {
     Overlay.of(context).insert(_overlayEntry!);
   }
 
+  /// Removes the tooltip overlay.
   void _dismissTooltip() {
     _overlayEntry?.remove();
     _overlayEntry = null;
@@ -151,9 +167,12 @@ class _CustomTooltipState extends State<CustomTooltip> {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
+      // To open the tooltip long press the button
       onLongPressStart: (details) {
         presentTip(context, details.globalPosition);
       },
+
+      // To dismiss the tool tip tap on the button
       onLongPressCancel: () {
         _dismissTooltip();
       },
@@ -162,6 +181,7 @@ class _CustomTooltipState extends State<CustomTooltip> {
   }
 }
 
+/// Custom painter for drawing the tooltip arrow.
 class ArrowPainter extends CustomPainter {
   final Color color;
   final bool isArrowPointingUp;
@@ -177,13 +197,13 @@ class ArrowPainter extends CustomPainter {
     final path = Path();
 
     if (isArrowPointingUp) {
-      path.moveTo(size.width / 2, 0); // Start from the top center
-      path.lineTo(size.width, size.height); // Line to bottom right
-      path.lineTo(0, size.height); // Line to bottom left
+      path.moveTo(size.width / 2, 0);
+      path.lineTo(size.width, size.height);
+      path.lineTo(0, size.height);
     } else {
-      path.moveTo(size.width / 2, size.height); // Start from the bottom center
-      path.lineTo(size.width, 0); // Line to top right
-      path.lineTo(0, 0); // Line to top left
+      path.moveTo(size.width / 2, size.height);
+      path.lineTo(size.width, 0);
+      path.lineTo(0, 0);
     }
 
     path.close();

@@ -18,8 +18,6 @@ class MyApp extends StatelessWidget {
       theme: AppTheme(),
       initialRoute: AppRoutes.splash,
       routes: AppRoutes.routes,
-      
-
       scrollBehavior: const ScrollBehavior().copyWith(overscroll: false),
     );
   }

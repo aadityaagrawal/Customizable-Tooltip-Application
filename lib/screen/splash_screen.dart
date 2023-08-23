@@ -26,8 +26,10 @@ class _SplashScreenState extends State<SplashScreen> {
 
     tipDetails = await DbController().getData();
     if (tipDetails.isEmpty) {
+      /// Will directly take us to addTip page in case the user does not added any tooltip information
       Navigator.pushReplacementNamed(context, "/addTip");
     } else {
+      /// Will directly take us to home screen page in case the user is added any tooltip info
       Navigator.pushReplacementNamed(context, "/");
     }
   }

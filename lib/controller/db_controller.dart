@@ -6,6 +6,8 @@ import 'package:trektip/model/tip_model.dart';
 class DbController {
   AppData appData = AppData();
 
+
+  /// Opens or creates the database and returns an instance of [Database].
   Future<Database> getDatabase() async {
     return await openDatabase(
       join(await getDatabasesPath(), appData.dbName),
@@ -33,6 +35,8 @@ class DbController {
     );
   }
 
+
+  /// Inserts [tipData] into the database.
   void insertData(TipModel tipData) async {
     final db = await getDatabase();
 
@@ -42,6 +46,7 @@ class DbController {
         conflictAlgorithm: ConflictAlgorithm.replace);
   }
 
+  /// Retrieves a list of [TipModel] instances from the database.
   Future<List<TipModel>> getData() async {
     final db = await getDatabase();
     final List<Map<String, dynamic>> maps = await db.query(appData.tableName);
@@ -50,6 +55,7 @@ class DbController {
     });
   }
 
+  /// Updates tooltip settings in the database for the specified [data] and [id].
   Future<void> updateTooltipSettings(TipModel data, int id) async {
     final db = await getDatabase();
     Map<String, dynamic> updateData = data.toMap();
@@ -62,6 +68,7 @@ class DbController {
     );
   }
 
+  /// Retrieves a single [TipModel] instance from the database based on [id].
   Future<TipModel> getSingleData(int id) async {
     final db = await getDatabase();
     final List<Map<String, dynamic>> maps =
@@ -70,6 +77,7 @@ class DbController {
     return TipModel.fromMap(maps[0]);
   }
 
+  /// Deletes a record from the database based on [id].
   void deleteData(int id) async {
     final db = await getDatabase();
 

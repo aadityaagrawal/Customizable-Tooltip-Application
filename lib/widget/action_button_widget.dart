@@ -1,5 +1,6 @@
-
 import 'package:flutter/material.dart';
+
+/// Button for the add form page
 
 class ActionButtons extends StatelessWidget {
   final Color buttonColor;
@@ -18,14 +19,15 @@ class ActionButtons extends StatelessWidget {
       width: MediaQuery.of(context).size.width * 0.4,
       height: 50,
       child: ElevatedButton(
-          style: ElevatedButton.styleFrom(
-              backgroundColor: buttonColor,
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(15))),
-          onPressed: onTap,
-          child: Text(
-            buttonText,
-          )),
+        style: ElevatedButton.styleFrom(
+            backgroundColor: buttonColor,
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(15))),
+        onPressed: onTap,
+        child: Text(
+          buttonText,
+        ),
+      ),
     );
   }
 }

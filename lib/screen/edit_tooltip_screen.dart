@@ -4,6 +4,9 @@ import 'package:trektip/controller/db_controller.dart';
 import 'package:trektip/model/tip_model.dart';
 import 'package:trektip/screen/screens.dart';
 
+
+
+/// A screen for managing and editing tooltips .
 class ToolTipEdit extends StatefulWidget {
   const ToolTipEdit({super.key});
 
@@ -16,6 +19,7 @@ class _ToolTipEditState extends State<ToolTipEdit> {
   List<TipModel> savedTips = [];
   List<Widget> addedTipsList = [];
 
+  /// Generates a list of tiles for displaying added tooltips.
   List<Widget> addingTipTile() {
     return List.generate(lengthofDataAdded, (index) {
       return Container(
@@ -40,14 +44,13 @@ class _ToolTipEditState extends State<ToolTipEdit> {
               ),
             ).then((result) {
               if (result == true) {
-                // Data was updated, refresh the screen
+                // Update the state when user renter the screen
                 setState(() {
-                  // Add your logic to refresh the UI or data here
                   DbController().getData().then((value) {
                     setState(() {
                       savedTips = value;
-                      savedTips.sort((a, b) =>
-                                  a.targetElement.compareTo(b.targetElement));
+                      savedTips.sort(
+                          (a, b) => a.targetElement.compareTo(b.targetElement));
                     });
                     lengthofDataAdded = savedTips.length;
 
@@ -56,10 +59,6 @@ class _ToolTipEditState extends State<ToolTipEdit> {
                 });
               }
             });
-            ;
-
-            // Navigator.pushNamed(context, '/updateTip',
-            //     arguments: savedTips[index]);
           },
           title: Text("Tooltip of ${(savedTips[index].targetElement)}"),
           contentPadding: const EdgeInsets.all(10),
@@ -72,6 +71,7 @@ class _ToolTipEditState extends State<ToolTipEdit> {
   void initState() {
     // TODO: implement initState
     super.initState();
+    // Fetch data from the database and initialize state
     DbController().getData().then((value) {
       setState(() {
         savedTips = value;

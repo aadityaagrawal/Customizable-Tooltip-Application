@@ -7,6 +7,8 @@ import 'package:trektip/widget/action_button_widget.dart';
 import '../widget/text_field_widget.dart';
 import 'package:flex_color_picker/flex_color_picker.dart';
 
+/// A form for creating or updating tooltip settings.
+
 class ToolTipForm extends StatefulWidget {
   final bool isUpdateTip;
   final TipModel? tipModel;
@@ -19,12 +21,15 @@ class ToolTipForm extends StatefulWidget {
 class _ToolTipFormState extends State<ToolTipForm> {
   List<Color?> dialogPickerColor = [null, null];
   final _formKey = GlobalKey<FormState>();
-  int n = 5;
+
+  /// Generating the dropdown options depending on [numberOfBoxes] value
   List<String> dropdownOptions =
       List.generate(AppData().numberOfBoxes, (index) => 'Button ${index + 1}');
+
   String? selectedOption;
   late ToolTipFormState _formState;
 
+  /// Check wether the dropdown is empty or not
   dynamic dropdownValidator(dynamic value) {
     if (value == null || value.isEmpty) {
       return 'Please select a target element';
@@ -121,7 +126,10 @@ class _ToolTipFormState extends State<ToolTipForm> {
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Text("Target Element"),
+                    Text(
+                      "Target Element",
+                      style: Theme.of(context).textTheme.displayMedium,
+                    ),
                     const SizedBox(
                       height: 10,
                     ),
@@ -155,7 +163,10 @@ class _ToolTipFormState extends State<ToolTipForm> {
                     const SizedBox(
                       height: 10,
                     ),
-                    const Text('Tooltip Text'),
+                    Text(
+                      'Tooltip Text',
+                      style: Theme.of(context).textTheme.displayMedium,
+                    ),
                     const SizedBox(
                       height: 10,
                     ),
@@ -172,7 +183,10 @@ class _ToolTipFormState extends State<ToolTipForm> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        const Text('Text Size'),
+                        Text(
+                          'Text Size',
+                          style: Theme.of(context).textTheme.displayMedium,
+                        ),
                         const SizedBox(
                           height: 10,
                         ),
@@ -189,7 +203,10 @@ class _ToolTipFormState extends State<ToolTipForm> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        const Text('Padding'),
+                        Text(
+                          'Padding',
+                          style: Theme.of(context).textTheme.displayMedium,
+                        ),
                         const SizedBox(
                           height: 10,
                         ),
@@ -206,7 +223,10 @@ class _ToolTipFormState extends State<ToolTipForm> {
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Text('Text Color'),
+                    Text(
+                      'Text Color',
+                      style: Theme.of(context).textTheme.displayMedium,
+                    ),
                     const SizedBox(
                       height: 10,
                     ),
@@ -257,7 +277,10 @@ class _ToolTipFormState extends State<ToolTipForm> {
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Text('Background Color'),
+                    Text(
+                      'Background Color',
+                      style: Theme.of(context).textTheme.displayMedium,
+                    ),
                     const SizedBox(
                       height: 10,
                     ),
@@ -309,7 +332,10 @@ class _ToolTipFormState extends State<ToolTipForm> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        const Text('Corner radius'),
+                        Text(
+                          'Corner radius',
+                          style: Theme.of(context).textTheme.displayMedium,
+                        ),
                         const SizedBox(
                           height: 10,
                         ),
@@ -326,7 +352,10 @@ class _ToolTipFormState extends State<ToolTipForm> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        const Text('Tooltip width'),
+                        Text(
+                          'Tooltip width',
+                          style: Theme.of(context).textTheme.displayMedium,
+                        ),
                         const SizedBox(
                           height: 10,
                         ),
@@ -345,7 +374,10 @@ class _ToolTipFormState extends State<ToolTipForm> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        const Text('Arrow width'),
+                        Text(
+                          'Arrow width',
+                          style: Theme.of(context).textTheme.displayMedium,
+                        ),
                         const SizedBox(
                           height: 10,
                         ),
@@ -362,7 +394,10 @@ class _ToolTipFormState extends State<ToolTipForm> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        const Text('Arrow height'),
+                        Text(
+                          'Arrow height',
+                          style: Theme.of(context).textTheme.displayMedium,
+                        ),
                         const SizedBox(
                           height: 10,
                         ),

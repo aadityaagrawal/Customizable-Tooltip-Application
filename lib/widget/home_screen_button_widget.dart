@@ -43,22 +43,26 @@ class CustomButton extends StatelessWidget {
               style: ElevatedButton.styleFrom(
                 minimumSize: Size(MediaQuery.of(context).size.width * 0.3, 30),
                 padding: const EdgeInsets.all(20),
-                backgroundColor: Theme.of(context).primaryColor,
+                backgroundColor: Colors.white,
               ),
-              onPressed: () {
-                print(tipData);
-              },
-              child: Text("Button ${index + 1}"),
+              onPressed: () {},
+              child: Text(
+                "Button ${index + 1}",
+                style: Theme.of(context).textTheme.displayMedium,
+              ),
             ),
           )
         : ElevatedButton(
             style: ElevatedButton.styleFrom(
               minimumSize: Size(MediaQuery.of(context).size.width * 0.3, 30),
               padding: const EdgeInsets.all(20),
-              backgroundColor: Theme.of(context).primaryColor,
+              backgroundColor: Colors.white,
             ),
             onPressed: () {},
-            child: Text("Button ${index + 1}"),
+            child: Text(
+              "Button ${index + 1}",
+              style: Theme.of(context).textTheme.displayMedium,
+            ),
           );
   }
 }
@@ -102,7 +106,6 @@ class ToolTipCustomShape extends ShapeBorder {
     Path path = Path()
       ..addRRect(RRect.fromRectAndRadius(rect, Radius.circular(borderRadius)))
       ..moveTo(rect.topCenter.dx - arrowWidth / 2, rect.topCenter.dy);
-
 
     double arrowTipOffset = preferBelow ? arrowOffset : -arrowOffset;
     double arrowBaseOffset = arrowTipOffset + (preferBelow ? 10 : -10);
