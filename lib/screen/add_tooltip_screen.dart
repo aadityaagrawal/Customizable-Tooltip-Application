@@ -93,12 +93,31 @@ class _ToolTipFormState extends State<ToolTipForm> {
         }).showPickerDialog(context);
   }
 
+  List<TipModel> savedTips = [];
+  List<String> savedOptions = [];
+
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     _formState = ToolTipFormState();
     if (widget.tipModel != null) showData(widget.tipModel);
+    DbController().getData().then((value) {
+      setState(() {
+        savedTips = value;
+        savedOptions =
+            savedTips.map((element) => element.targetElement).toList();
+        var set1 = Set.from(dropdownOptions);
+        var set2 = Set.from(savedOptions);
+
+        if (widget.isUpdateTip) {
+          dropdownOptions = List.from(set1.difference(set2));
+          dropdownOptions.add(widget.tipModel!.targetElement);
+        } else {
+          dropdownOptions = List.from(set1.difference(set2));
+        }
+      });
+    });
   }
 
   @override
