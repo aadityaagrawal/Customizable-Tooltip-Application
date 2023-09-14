@@ -9,14 +9,13 @@ The app allows users to customize tooltips and display them on the home screen.
 
 Upon launching the app, users are greeted with a splash screen. Depending on whether the user has added any tooltips or not, the app will direct the user to either the form screen or the home screen.
 
-<img src="./output_images/SplashScreen.png" alt="Home Screen" width="300"/> 
-
+<p align = 'center'> <img src="./output_images/SplashScreen.png" alt="Home Screen" width="300"/> </p>
 
 ### 2. Home Screen
 
 The home screen is the main interface of the app. It displays a collection of buttons, each of which can trigger a tooltip when long-pressed. Tapping on the button will dismiss the tooltip.
 
-<img src="./output_images/Home_Screen.png" alt="Home Screen" width="300"/>
+<p align = 'center'><img src="./output_images/Home_Screen.png" alt="Home Screen" width="300"/></p>
 
 ### 3. Add or Update Form Screen
 
@@ -24,11 +23,13 @@ This screen allows users to add new tooltips or update existing ones. Users can 
 
 #### Add Tooltip Form:
 
-<img src="./output_images/add_tooltip_form.png" alt="Home Screen" width="300"/> 
+
+<p align = 'center'><img src="./output_images/add_tooltip_form.png" alt="Home Screen" width="300"/> </p>
 
 #### Edit Tooltip Form:
 
-<img src="./output_images/Update_tooltip_form.png" alt="Home Screen" width="300"/> 
+
+<p align = 'center'><img src="./output_images/Update_tooltip_form.png" alt="Home Screen" width="300"/> </p>
 
 ### 4. Edit Screen
 
@@ -36,11 +37,13 @@ On the edit screen, users can view a list of all the added tooltips. If the numb
 
 #### Tool details screen when the number of tooltips added is less than the number of buttons present in the home screen:
 
-<img src="./output_images/Tooltip_database_1.png" alt="Home Screen" width="300"/> 
+
+<p align = 'center'><img src="./output_images/Tooltip_database_1.png" alt="Home Screen" width="300"/> </p>
 
 #### Tool details screen when the number of tooltips added is equal to the number of boxes in the home screen:
 
-<img src="./output_images/Tooltip_database_2.png" alt="Home Screen" width="300"/> 
+
+<p align = 'center'><img src="./output_images/Tooltip_database_2.png" alt="Home Screen" width="300"/> </p>
 
 ## To start
 
